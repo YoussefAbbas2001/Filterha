@@ -8,7 +8,7 @@ time_step = 1.0        # day
 scale_factor = 0.4 
 
 class ScalerFilter:
-    def __init__(self, scale_factor, gain_rate, init_estimate=100, time_step=1.0, debug=True):
+    def __init__(self, scale_factor, gain_rate, init_estimate=0, time_step=1.0, debug=True):
         self.scale_factor  = scale_factor
         self.gain_rate     = gain_rate 
         self.init_estimate = init_estimate
@@ -18,6 +18,7 @@ class ScalerFilter:
         self.measurements = []
         self.predictions  = []
         self.estimations  = [init_estimate]
+
 
 
     def propagation(self):
@@ -48,12 +49,16 @@ class ScalerFilter:
         '''
         self.measurements.append(value)
 
+    def __repr__(self):
+        return f"ScalerFilter( scale_factor={self.scale_factor}, gain_rate={self.gain_rate} ) "
+
 
 
 
 
 if __name__ == '__main__':
     filter = ScalerFilter(scale_factor=0.4, gain_rate=1, init_estimate=100)
+    print(filter)
     filter.add_measurement(99.0)
     filter.add_measurement(102.0)
     filter.add_measurement(103.0)
